@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "6bc95645-116d-46e9-b844-739080af39d9",
+		"name": "springboot_weekend_b1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25217850"
+	},
+	"item": [
+		{
+			"name": "student_management",
+			"item": [
+				{
+					"name": "CRUD",
+					"item": [
+						{
+							"name": "save student",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhYmR1bCIsImlhdCI6MTc0NTY3NTY4MiwiZXhwIjoxNzQ1Njc1NzQyfQ.C_BSwzxnDyKYC68WCSDoprQAcfowwFofP5NIvoyroFk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"Rishabh\",\r\n    \"lastName\": \"Shinde\",\r\n    \"email\":\"rishab1234@gmail.com\",\r\n    \"gender\": \"Male\",\r\n    \"age\":30,\r\n    \"address\":\"Kharghar\",\r\n    \"percentage\": 85.55\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/sprk/student",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"sprk",
+										"student"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all students",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/sprk/student",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"sprk",
+										"student"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Student By Roll No",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/sprk/student/Hello",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"sprk",
+										"student",
+										"Hello"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Student By Gender",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/sprk/gender-student?gender=Female",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"sprk",
+										"gender-student"
+									],
+									"query": [
+										{
+											"key": "gender",
+											"value": "Female"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete students",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer: 546549654956",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/sprk/student?rollNo=3000",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"sprk",
+										"student"
+									],
+									"query": [
+										{
+											"key": "rollNo",
+											"value": "3000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update student",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"rushikeshsharma123@gmail.com\",\r\n    \"age\": 55,\r\n    \"address\": \"Taloja\",\r\n    \"percentage\": 85.55\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/sprk/student?rollNo=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"sprk",
+										"student"
+									],
+									"query": [
+										{
+											"key": "rollNo",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "test",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Abdul Gani\",\r\n    \"lastName\": \"Memon\",\r\n    \"age\": 55,\r\n    \"gender\": \"Male\",\r\n    \"address\": \"Taloja\",\r\n    \"percentage\": 85.55\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"test"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Relationships",
+			"item": [
+				{
+					"name": "One To One Uni",
+					"item": [
+						{
+							"name": "save student",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"Sani\",\r\n    \"lastName\": \"Bankar\",\r\n    \"phone\": \"+91 84758 98569\",\r\n    \"studentDetail\": {\r\n        \"hobby\": \"Swimming\",\r\n        \"education\": \"BE CS\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/save-student",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"save-student"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all students",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/get-all-student",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"get-all-student"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get by roll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/get-by-rollno?rollno=4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"get-by-rollno"
+									],
+									"query": [
+										{
+											"key": "rollno",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
