@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Information</title>
+</head>
+<body>
+    <h1>Student Info</h1>
+    <p>Roll No = <strong th:text="${student.rollNo}"></strong></p>
+    <p>Name = <strong th:text="${student.firstName + ' '+student.lastName}"></strong> </p>
+    <p>Gender = <strong th:text="${student.gender}"></strong></p>
+    <p>Phone = <strong th:text="${student.phone}"></strong></p>
+    <p>Email = <strong th:text="${student.email}"></strong></p>
+</body>
+</html>
