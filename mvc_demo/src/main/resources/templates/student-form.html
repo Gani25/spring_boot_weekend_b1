@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Form</title>
+</head>
+<body>
+<h1>Student Form</h1>
+<form th:action="@{/process}" method="post">
+    <label for="fname">First Name</label>
+    <input type="text" name="first_name" id="fname" placeholder="Enter first Name">
+    <br>
+    <br>
+    <label for="lname">Last Name</label>
+    <input type="text" name="last_name" id="lname" placeholder="Enter first Name">
+    <br>
+    <br>
+    <label for="em">Email</label>
+    <input type="text" name="email" id="em" placeholder="Enter first Name">
+    <br>
+    <br>
+
+    <input type="submit" value="Save">
+    
+</form>
+</body>
+</html>

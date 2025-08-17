@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Form With Models</title>
+</head>
+<body>
+<h1>Student Form New 2</h1>
+<form th:action="@{/process2}" method="post" th:object="${student}">
+    <label for="fname">First Name</label>
+    <input type="text" th:field="*{firstName}" id="fname" placeholder="Enter first Name">
+    <br>
+    <br>
+    <label for="lname">Last Name</label>
+    <input type="text" th:field="*{lastName}" id="lname" placeholder="Enter first Name">
+    <br>
+    <br>
+    <label for="em">Email</label>
+    <input type="text" id="em" th:field="*{email}" placeholder="Enter first Name">
+    <br>
+    <br>
+
+    <input type="submit" th:if="*{rollNo == 0}" value="Save">
+    <input type="submit" th:if="*{rollNo != 0}" value="Update">
+
+</form>
+</body>
+</html>

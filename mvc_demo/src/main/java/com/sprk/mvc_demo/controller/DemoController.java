@@ -1,9 +1,14 @@
 package com.sprk.mvc_demo.controller;
 
 import com.sprk.mvc_demo.entity.Student;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -77,6 +82,50 @@ public class DemoController {
         students.sort((s1,s2)->Integer.compare(s1.getRollNo(), s2.getRollNo()));
         model.addAttribute("students", students);
         return "student-list";
+    }
+
+    @GetMapping("/showform")
+    public String showForm(){
+        return "student-form";
+    }
+
+    @PostMapping("/process")
+    public String processForm(@RequestParam(name = "first_name") String firstName, @RequestParam(name = "last_name") String lastName, @RequestParam(name = "email") String email, HttpSession session, RedirectAttributes redirectAttributes){
+        session.setAttribute("firstName", firstName);
+        session.setAttribute("lastName", lastName);
+        session.setAttribute("email", email);
+        redirectAttributes.addFlashAttribute("msg","Student Saved Successfully");
+        return "redirect:/confirm";
+    }
+
+    @GetMapping("/confirm")
+    public String confirm(){
+
+        return "student-confirmation";
+    }
+
+    @GetMapping("/showform2")
+    public String showForm2(Model model){
+        Student student = new Student();
+//        student.setRollNo(10);
+//        student.setFirstName("Pranjali");
+//        student.setLastName("Verma");
+//        student.setEmail("pranjali@gmail.com");
+        model.addAttribute("student", student);
+        return "student-form2";
+    }
+
+    @PostMapping("/process2")
+    public String processForm2(@ModelAttribute("student") Student student, HttpSession session, RedirectAttributes redirectAttributes){
+        session.setAttribute("student",student);
+        redirectAttributes.addFlashAttribute("msg","Student Saved Successfully");
+        return "redirect:/confirm2";
+    }
+
+    @GetMapping("/confirm2")
+    public String confirm2(){
+
+        return "student-confirmation2";
     }
 
 }

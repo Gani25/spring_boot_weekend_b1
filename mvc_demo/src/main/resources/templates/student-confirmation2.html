@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Confirmation 2</title>
+</head>
+<body>
+<p th:if="${msg}" th:text="${msg}"></p>
+<h1>Student is confirm New Page</h1>
+<h3>Name = <th:block th:text="${session.student.firstName + ' '+ session.student.lastName}"></th:block> </h3>
+<p>Email = <th:block th:text="${session.student.email}"></th:block> </p>
+
+</body>
+</html>
