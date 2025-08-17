@@ -2,8 +2,10 @@ package com.sprk.mvc_demo.controller;
 
 import com.sprk.mvc_demo.entity.Student;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -116,7 +118,10 @@ public class DemoController {
     }
 
     @PostMapping("/process2")
-    public String processForm2(@ModelAttribute("student") Student student, HttpSession session, RedirectAttributes redirectAttributes){
+    public String processForm2(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes){
+        if(bindingResult.hasErrors()){
+            return "student-form2";
+        }
         session.setAttribute("student",student);
         redirectAttributes.addFlashAttribute("msg","Student Saved Successfully");
         return "redirect:/confirm2";

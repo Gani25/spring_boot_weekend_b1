@@ -9,15 +9,27 @@
 <form th:action="@{/process2}" method="post" th:object="${student}">
     <label for="fname">First Name</label>
     <input type="text" th:field="*{firstName}" id="fname" placeholder="Enter first Name">
-    <br>
+
+    <p style="color:red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+    
     <br>
     <label for="lname">Last Name</label>
     <input type="text" th:field="*{lastName}" id="lname" placeholder="Enter first Name">
-    <br>
+
+    <p style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+
     <br>
     <label for="em">Email</label>
-    <input type="text" id="em" th:field="*{email}" placeholder="Enter first Name">
+    <input type="text" id="em" th:field="*{email}" placeholder="Enter Email">
+
+    <p style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+
     <br>
+    <label for="ph">Phone</label>
+    <input type="text" id="ph" th:field="*{phone}" placeholder="+91 12345 12345">
+
+    <p style="color:red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
+
     <br>
 
     <input type="submit" th:if="*{rollNo == 0}" value="Save">
