@@ -1,11 +1,10 @@
 package com.sprk.ecommerce.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +17,9 @@ public class ProductRequest {
     @NotBlank(message = "Product name is required")
     private String productName;
 
-    @NotBlank(message = "Price is required")
-    @Pattern(regexp = "^[1-9]+$", message = "Price should be greater than 0")
-    private double productPrice;
+    @NotNull(message = "Price is required")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than 0")
+    private BigDecimal productPrice;
 
     @NotBlank(message = "Description is required")
     private String productDescription;
