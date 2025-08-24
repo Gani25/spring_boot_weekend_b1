@@ -2,9 +2,11 @@ package com.sprk.ecommerce.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Data
+@ToString(exclude = "product")
 public class Image {
 
     @Id

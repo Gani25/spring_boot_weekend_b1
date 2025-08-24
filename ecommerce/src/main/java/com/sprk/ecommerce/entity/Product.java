@@ -2,12 +2,14 @@ package com.sprk.ecommerce.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
+@ToString
 public class Product {
 
     @Id
