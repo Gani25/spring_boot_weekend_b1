@@ -25,5 +25,5 @@ public class ProductRequest {
     private String productDescription;
 
     @NotEmpty(message = "Please provide atleast on image URL")
-    private List<@Pattern(regexp="^(https?://[^\\s]+)$",message = "Invalid image URL format")String> imageUrls ;
+    private List<@NotBlank(message = "URL cannot be blank") @Pattern(regexp="^(https?://[^\\s]+)$",message = "Invalid image URL format")String> imageUrls ;
 }

@@ -41,22 +41,30 @@
                         <div class="input-group mb-2">
                             <input type="text" class="form-control" placeholder="Enter image URL"
                                    th:field="*{imageUrls[0]}">
+
                         </div>
+                        <span th:if="${#fields.hasErrors('imageUrls[0]')}" th:errors="*{imageUrls[0]}"
+                           class="text-danger fs-6 mb-2"></span>
                     </th:block>
 
                     <!-- Case 2: On validation error or when imageUrls has values -->
-                    <div class="input-group mb-2" th:each="url, iterator : *{imageUrls}">
+                    <th:block th:each="url, iterator : *{imageUrls}">
                         <th:block th:if="${iterator.index > 0}">
-                        <input type="text" class="form-control" placeholder="Enter image URL"
-                               th:field="*{imageUrls[__${iterator.index}__]}">
-                        <!-- Add remove button only for indexes > 0 -->
-                            <button type="button" class="btn btn-danger remove-url-btn">X</button>
+                            <div class="input-group mb-2">
+
+                                <input type="text" class="form-control" placeholder="Enter image URL"
+                                       th:field="*{imageUrls[__${iterator.index}__]}">
+                                <!-- Add remove button only for indexes > 0 -->
+                                <button type="button" class="btn btn-danger remove-url-btn">X</button>
+                            </div>
+                            <span th:if="${#fields.hasErrors('imageUrls[' + iterator.index + ']')}"
+                               th:errors="*{imageUrls[__${iterator.index}__]}"
+                               class="text-danger fs-6 mb-2"></span>
                         </th:block>
-                    </div>
+                    </th:block>
                 </div>
                 <button type="button" class="btn btn-secondary" id="add-url-btn">Add More Url</button>
-                <span th:if="${#fields.hasErrors('imageUrls')}" th:errors="*{imageUrls}"
-                      class="text-danger fs-6"></span>
+
 
             </div>
 

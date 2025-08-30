@@ -7,6 +7,13 @@
 <body>
     <th:block th:insert="navbar :: myNav"></th:block>
 
+    <!--Display Msgs-->
+    <div th:if="${successMsg}" class="alert alert-success text-center w-50 mx-auto my-2" role="alert">
+        <th:block th:text="${successMsg}"></th:block>
+    </div>
+    <div th:if="${errorMsg}" class="alert alert-danger text-center w-50 mx-auto my-2" role="alert">
+        <th:block th:text="${errorMsg}"></th:block>
+    </div>
 
 
     <th:block th:insert="body-links :: bodyLinks"></th:block>
