@@ -16,27 +16,47 @@
             <div class="col-md-8 mb-3">
                 <label for="productName" class="form-label">Product Name</label>
                 <input type="text" class="form-control" id="productName" th:field="*{productName}">
-                <span th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}" class="text-danger fs-6"></span>
+                <span th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}"
+                      class="text-danger fs-6"></span>
             </div>
             <div class="col-md-4 mb-3">
                 <label for="price" class="form-label">Price</label>
                 <input type="text" class="form-control" id="price" th:field="*{productPrice}">
-                <span th:if="${#fields.hasErrors('productPrice')}" th:errors="*{productPrice}" class="text-danger fs-6"></span>
+                <span th:if="${#fields.hasErrors('productPrice')}" th:errors="*{productPrice}"
+                      class="text-danger fs-6"></span>
             </div>
 
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
                 <textarea class="form-control" id="description" rows="3" th:field="*{productDescription}">
                 </textarea>
-                <span th:if="${#fields.hasErrors('productDescription')}" th:errors="*{productDescription}" class="text-danger fs-6"></span>
+                <span th:if="${#fields.hasErrors('productDescription')}" th:errors="*{productDescription}"
+                      class="text-danger fs-6"></span>
             </div>
             <div class="mb-3">
                 <label for="urls" class="form-label">Image Urls</label>
-                <div id="image-url-container" >
-                    <input type="text" class="form-control mb-2"  th:field="*{imageUrls[0]}" placeholder="Enter imge URL">
+                <div id="image-url-container">
+                    <!-- Case 1: No imageUrls or first-time visit -->
+                    <th:block th:if="${#lists.isEmpty(imageUrls)}">
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control" placeholder="Enter image URL"
+                                   th:field="*{imageUrls[0]}">
+                        </div>
+                    </th:block>
+
+                    <!-- Case 2: On validation error or when imageUrls has values -->
+                    <div class="input-group mb-2" th:each="url, iterator : *{imageUrls}">
+                        <th:block th:if="${iterator.index > 0}">
+                        <input type="text" class="form-control" placeholder="Enter image URL"
+                               th:field="*{imageUrls[__${iterator.index}__]}">
+                        <!-- Add remove button only for indexes > 0 -->
+                            <button type="button" class="btn btn-danger remove-url-btn">X</button>
+                        </th:block>
+                    </div>
                 </div>
                 <button type="button" class="btn btn-secondary" id="add-url-btn">Add More Url</button>
-                <span th:if="${#fields.hasErrors('imageUrls')}" th:errors="*{imageUrls}" class="text-danger fs-6"></span>
+                <span th:if="${#fields.hasErrors('imageUrls')}" th:errors="*{imageUrls}"
+                      class="text-danger fs-6"></span>
 
             </div>
 
@@ -49,16 +69,37 @@
 
 <th:block th:insert="body-links :: bodyLinks"></th:block>
 <script>
-    document.getElementById("add-url-btn").addEventListener("click", function (){
-        const imageContainer = document.getElementById("image-url-container");
-        const index = imageContainer.querySelectorAll("input").length;
-        // create new input element
-        const newInput = document.createElement("input");
-        newInput.type = "text";
-        newInput.className = "form-control mb-2";
-        newInput.name = "imageUrls["+index+"]";
-        newInput.placeholder = "Enter imge URL";
-        imageContainer.appendChild(newInput);
+    document.addEventListener("DOMContentLoaded", function () {
+        const container = document.getElementById("image-url-container");
+        const addButton = document.getElementById("add-url-btn");
+
+        // Add new input field dynamically
+        addButton.addEventListener("click", function () {
+            const index = container.querySelectorAll("input").length; // 1
+            const wrapper = document.createElement("div");
+            wrapper.className = "input-group mb-2";
+            wrapper.innerHTML = `
+            <input type="text" class="form-control" name="imageUrls[${index}]" placeholder="Enter image URL">
+            <button type="button" class="btn btn-danger remove-url-btn">X</button>
+        `;
+            container.appendChild(wrapper);
+        });
+
+        // Remove input field dynamically
+        container.addEventListener("click", function (e) {
+            if (e.target.classList.contains("remove-url-btn")) {
+                e.target.parentElement.remove();
+                reindexInputs();
+            }
+        });
+
+        // Reindex after deletion so Spring binds correctly
+        function reindexInputs() {
+            const inputs = container.querySelectorAll("input");
+            inputs.forEach((input, i) => {
+                input.name = "imageUrls[" + i + "]";
+            });
+        }
     });
 </script>
 </body>

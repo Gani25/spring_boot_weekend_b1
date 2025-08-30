@@ -28,6 +28,13 @@ public class ProductController {
     @PostMapping("/admin/product")
     public String processProductForm(@Valid @ModelAttribute("productRequest") ProductRequest productRequest, BindingResult bindingResult){
 
+        if(bindingResult.hasErrors()){
+            System.out.println(productRequest);
+            return "productform";
+        }
+        else{
+            System.out.println(productRequest);
+        }
 
         return "#";
 
