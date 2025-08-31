@@ -8,7 +8,7 @@
 <th:block th:insert="navbar :: myNav"></th:block>
 
 <div class="container">
-    <div class="w-75 mx-auto">
+    <div class="w-75 mx-auto mb-5">
 
         <h1 class="my-5 text-center">Product Details</h1>
 
@@ -23,6 +23,13 @@
                 <label for="price" class="form-label">Price</label>
                 <input type="text" class="form-control" id="price" th:field="*{productPrice}">
                 <span th:if="${#fields.hasErrors('productPrice')}" th:errors="*{productPrice}"
+                      class="text-danger fs-6"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="brand" class="form-label">Brand</label>
+                <input type="text" class="form-control" id="brand" th:field="*{brand}">
+                <span th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"
                       class="text-danger fs-6"></span>
             </div>
 
@@ -63,13 +70,13 @@
                         </th:block>
                     </th:block>
                 </div>
-                <button type="button" class="btn btn-secondary" id="add-url-btn">Add More Url</button>
+                <button type="button" class="btn btn-secondary mt-3" id="add-url-btn">Add More Url</button>
 
 
             </div>
-
+            <div class="mb-3 w-25 mx-auto">
             <button type="submit" class="btn btn-primary">Save Product</button>
-
+            </div>
         </form>
     </div>
 </div>

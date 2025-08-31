@@ -7,6 +7,9 @@ import com.sprk.ecommerce.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -26,5 +29,11 @@ public class ProductService {
         } else {
             return false;
         }
+    }
+
+    public List<ProductRequest> getAllProducts() {
+        List<Product> product = productRepository.findAll();
+
+        List<ProductRequest> productRequests = new ArrayList<>();
     }
 }

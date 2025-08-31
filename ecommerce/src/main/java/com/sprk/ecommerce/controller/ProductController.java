@@ -25,6 +25,14 @@ public class ProductController {
 
     private final ProductService productService;
 
+    @GetMapping("/")
+    public String index(Model model) {
+
+        List<ProductRequest> productRequestList = productService.getAllProducts();
+        model.addAttribute("products", productRequestList);
+        return "index";
+    }
+
     @GetMapping("/admin/product")
     public String showProductForm(Model model){
         ProductRequest productRequest = new ProductRequest();
@@ -53,6 +61,8 @@ public class ProductController {
                 return "redirect:/";
             }
         }
+
+
 
 
 

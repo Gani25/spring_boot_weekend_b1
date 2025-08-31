@@ -18,8 +18,11 @@ public class Product {
 
     private String productName;
 
-    private double productPrice;
+    private String brand;
 
+    private double productPrice;
+//    @Column(columnDefinition = "Longtext")
+    @Lob
     private String productDescription;
 
     // One to Many

@@ -17,6 +17,9 @@ public class ProductRequest {
     @NotBlank(message = "Product name is required")
     private String productName;
 
+    @NotBlank(message = "Brand is required")
+    private String brand;
+
     @NotNull(message = "Price is required")
     @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than 0")
     private BigDecimal productPrice;
