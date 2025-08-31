@@ -33,12 +33,12 @@
 </div>
 
 <!--Load all product in form of card-->
-<div class="container">
+<div class="container mt-5">
     <div class="row row-cols-xl-3 row-cols-md-3 row-cols-sm-2 row-cols-1">
 
         <th:block th:each="product, prodStat : ${productLists}">
 
-            <div class="col mb-2 mt-5">
+            <div class="col my-2">
 
                 <div class="card product-card">
                     <div th:id="'carousel-' + ${prodStat.index}" class="carousel slide" data-bs-ride="carousel">
