@@ -29,7 +29,7 @@ public class ProductController {
     public String index(Model model) {
 
         List<ProductRequest> productRequestList = productService.getAllProducts();
-        model.addAttribute("products", productRequestList);
+        model.addAttribute("productLists", productRequestList);
         return "index";
     }
 

@@ -3,19 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <th:block th:insert="header-links :: headLinks"></th:block>
+    <style>
+        .prod-img{
+            height: 300px;
+            object-fit: cover;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+        .product-card{
+            border-radius: 20px;
+            /*height: 600px;*/
+        }
+        .prod-desc{
+            height: 50px;
+            overflow-y: hidden;
+        }
+
+    </style>
 </head>
 <body>
-    <th:block th:insert="navbar :: myNav"></th:block>
+<th:block th:insert="navbar :: myNav"></th:block>
 
-    <!--Display Msgs-->
-    <div th:if="${successMsg}" class="alert alert-success text-center w-50 mx-auto my-2" role="alert">
-        <th:block th:text="${successMsg}"></th:block>
+<!--Display Msgs-->
+<div th:if="${successMsg}" class="alert alert-success text-center w-50 mx-auto my-2" role="alert">
+    <th:block th:text="${successMsg}"></th:block>
+</div>
+<div th:if="${errorMsg}" class="alert alert-danger text-center w-50 mx-auto my-2" role="alert">
+    <th:block th:text="${errorMsg}"></th:block>
+</div>
+
+<!--Load all product in form of card-->
+<div class="container">
+    <div class="row row-cols-xl-3 row-cols-md-3 row-cols-sm-2 row-cols-1">
+
+        <th:block th:each="product, prodStat : ${productLists}">
+
+            <div class="col mb-2 mt-5">
+
+                <div class="card product-card">
+                    <div th:id="'carousel-' + ${prodStat.index}" class="carousel slide" data-bs-ride="carousel">
+                        <!-- Carousel Indicators -->
+                        <div class="carousel-indicators">
+                            <th:block th:each="url, iterStat : ${product.imageUrls}">
+                                <button type="button"
+                                        th:attr="data-bs-target='#carousel-' + ${prodStat.index},
+                                         data-bs-slide-to=${iterStat.index},
+                                         aria-label='Slide ' + ${iterStat.index + 1},
+                                         aria-current=${iterStat.index == 0} ? 'true' : null"
+                                        th:classappend="${iterStat.index == 0} ? 'active' : ''">
+                                </button>
+                            </th:block>
+                        </div>
+
+                        <!-- Carousel Inner -->
+                        <div class="carousel-inner">
+                            <th:block th:each="url, iterStat : ${product.imageUrls}">
+                                <div class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active'">
+                                    <img th:src="${url}" class="d-block w-100 prod-img" alt="Product Image">
+                                </div>
+                            </th:block>
+                        </div>
+
+                        <!-- Carousel Controls -->
+                        <button class="carousel-control-prev" type="button"
+                                th:attr="data-bs-target='#carousel-' + ${prodStat.index}"
+                                data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button"
+                                th:attr="data-bs-target='#carousel-' + ${prodStat.index}"
+                                data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
+                    <!--<img src="https://images.pexels.com/photos/3937174/pexels-photo-3937174.jpeg" class="card-img-top"
+                         alt="...">-->
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <th:block th:text="${product.productName}"></th:block>
+                        </h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">
+                            <th:block th:text="${product.brand}"></th:block>
+                        </h6>
+
+                        <p class="card-text prod-desc">
+                            <th:block th:text="${product.productDescription}"></th:block>
+                        </p>
+                        <p class="card-text fw-bold">
+                            <th:block th:text="${product.productPrice} + ' INR'"></th:block>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </th:block>
+
     </div>
-    <div th:if="${errorMsg}" class="alert alert-danger text-center w-50 mx-auto my-2" role="alert">
-        <th:block th:text="${errorMsg}"></th:block>
-    </div>
 
 
-    <th:block th:insert="body-links :: bodyLinks"></th:block>
+</div>
+
+
+<th:block th:insert="body-links :: bodyLinks"></th:block>
 </body>
 </html>

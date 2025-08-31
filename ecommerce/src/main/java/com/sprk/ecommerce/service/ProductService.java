@@ -32,8 +32,14 @@ public class ProductService {
     }
 
     public List<ProductRequest> getAllProducts() {
-        List<Product> product = productRepository.findAll();
+        List<Product> products = productRepository.findAll();
 
-        List<ProductRequest> productRequests = new ArrayList<>();
+        List<ProductRequest> productRequests = products
+                .stream()
+                .map((product) -> productMapper.mapProductToProductRequest(product))
+                .toList();
+
+        return productRequests;
+
     }
 }
