@@ -39,8 +39,15 @@ public class ProductController {
 
     // Get Product by id
     @GetMapping("/product/{productId}")
-    public String showIndividualProduct(@PathVariable Long productId, Model model){
+    public String showIndividualProduct(@PathVariable String productIdStr, Model model, RedirectAttributes redirectAttributes){
+        
 
+        ProductRequest productRequest = productService.getProductById(productId);
+        if(productRequest == null){
+            redirectAttributes.addFlashAttribute("errorMsg", String.format("Product with id = %d not found",productId));
+            return "redirect:/";
+        }
+        model.addAttribute("productRequest", productRequest);
         return "individual-product";
     }
 
