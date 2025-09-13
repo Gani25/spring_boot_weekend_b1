@@ -121,7 +121,7 @@
 
                 <!-- Admin Actions -->
                 <div class="mt-4 action-buttons d-flex gap-3">
-                    <a th:href="@{'/admin/product/update/' + ${productRequest.productId}}"
+                    <a th:href="@{'/admin/product/' + ${productRequest.productId}+'/edit'}"
                        class="btn btn-warning btn-lg">
                         <i class="fa-solid fa-pen-to-square"></i> Update
                     </a>

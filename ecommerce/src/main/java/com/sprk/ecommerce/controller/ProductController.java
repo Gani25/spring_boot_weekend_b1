@@ -31,20 +31,38 @@ public class ProductController {
     }
 
     @GetMapping("/admin/product")
-    public String showProductForm(Model model){
+    public String showProductForm(Model model) {
         ProductRequest productRequest = new ProductRequest();
         model.addAttribute("productRequest", productRequest);
         return "productform";
     }
 
+    @GetMapping("/admin/product/{productId}/edit")
+    public String showUpdateProductForm(@PathVariable int productId, Model model) {
+        ProductRequest productRequest = productService.getProductById(productId);
+        model.addAttribute("productRequest", productRequest);
+        return "update-product-form";
+    }
+
+    @GetMapping("/product/")
+    public String showErrorForEmptyId(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("errorMsg", "Please enter a valid product ID");
+        return "redirect:/";
+    }
+
     // Get Product by id
     @GetMapping("/product/{productId}")
-    public String showIndividualProduct(@PathVariable String productIdStr, Model model, RedirectAttributes redirectAttributes){
-        
+    public String showIndividualProduct(@PathVariable(name = "productId") String productIdStr, Model model, RedirectAttributes redirectAttributes) {
+        if (!productIdStr.matches("^\\d+$")) {
+            redirectAttributes.addFlashAttribute("errorMsg", "product ID must be integer only");
+            return "redirect:/";
+        }
+        int productId = Integer.parseInt(productIdStr);
+
 
         ProductRequest productRequest = productService.getProductById(productId);
-        if(productRequest == null){
-            redirectAttributes.addFlashAttribute("errorMsg", String.format("Product with id = %d not found",productId));
+        if (productRequest == null) {
+            redirectAttributes.addFlashAttribute("errorMsg", String.format("Product with id = %d not found", productId));
             return "redirect:/";
         }
         model.addAttribute("productRequest", productRequest);
@@ -52,29 +70,25 @@ public class ProductController {
     }
 
     @PostMapping("/admin/product")
-    public String processProductForm(@Valid @ModelAttribute("productRequest") ProductRequest productRequest, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String processProductForm(@Valid @ModelAttribute("productRequest") ProductRequest productRequest, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
 //            System.out.println(productRequest);
             return "productform";
-        }
-        else{
+        } else {
 //            System.out.println(productRequest);
             boolean result = productService.saveProduct(productRequest);
-            if(result){
-                String message = "Product: "+productRequest.getProductName()+" has been saved";
-                redirectAttributes.addFlashAttribute("successMsg",message);
+            if (result) {
+                String message = "Product: " + productRequest.getProductName() + " has been saved";
+                redirectAttributes.addFlashAttribute("successMsg", message);
                 return "redirect:/";
-            }else{
+            } else {
 
                 String message = "Some thing wrong happen!!";
-                redirectAttributes.addFlashAttribute("errorMsg",message);
+                redirectAttributes.addFlashAttribute("errorMsg", message);
                 return "redirect:/";
             }
         }
-
-
-
 
 
     }
