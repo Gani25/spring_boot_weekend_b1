@@ -26,6 +26,6 @@ public class Product {
     private String productDescription;
 
     // One to Many
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> productImages;
 }

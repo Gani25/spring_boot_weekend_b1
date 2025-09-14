@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -47,14 +48,14 @@ public class ProductService {
     public ProductRequest getProductById(int productId) {
         Product product = productRepository.findById(productId).orElse(null);
 
-        if(product != null) {
+        if (product != null) {
             return productMapper.mapProductToProductRequest(product);
         }
         return null;
 
     }
 
-    public boolean updateProduct(ProductRequest productRequest) {
+    /*public boolean updateProduct(ProductRequest productRequest) {
 
         Product product = productMapper.mapProductRequestToProduct(productRequest);// we have product id -> product (id)
         // In product obj -> we dont have image id -> so it will insert same images again
@@ -74,6 +75,49 @@ public class ProductService {
         } else {
             return false;
         }
+    }*/
+
+    // Bcoz of Image Problem We are writing new logic for update
+    public boolean updateProduct(ProductRequest productRequest) {
+
+        Product dbProduct1 = productRepository.findById(productRequest.getProductId()).orElse(null);
+        List<String> dbImagesUrls = dbProduct1.getProductImages().stream().map(Image::getImagePathUrl).toList();
+        List<String> productRequestImagesUrls = productRequest.getImageUrls();
+
+//        System.out.println("Db Images = "+dbImagesUrls+" Size = "+dbImagesUrls.size());
+//        System.out.println("Product Images = "+productRequestImagesUrls+" Size = "+productRequestImagesUrls.size());
+
+        // Do change images and clear old ones if in productRequest we find new urls
+
+        if (!productRequestImagesUrls.equals(dbImagesUrls) || productRequestImagesUrls.size() != dbImagesUrls.size()) {
+            // work only if there is some changes in image urls
+//            System.out.println("Inside If.....");
+            dbProduct1.getProductImages().clear();// orphan removal
+//            System.out.println("After clear = "+dbProduct1.getProductImages().size());
+            for (String imageUrl : productRequestImagesUrls) {
+
+                Image image = new Image();
+                image.setImagePathUrl(imageUrl);
+                image.setProduct(dbProduct1);
+
+                dbProduct1.getProductImages().add(image);
+
+
+//            System.out.println("After adding new images = "+dbProduct1.getProductImages().size());
+            }
+        }
+
+        // If images are same then I only have to update dbproduct1
+        dbProduct1.setProductName(productRequest.getProductName());
+        dbProduct1.setProductDescription(productRequest.getProductDescription());
+        dbProduct1.setProductPrice(productRequest.getProductPrice().doubleValue());
+        dbProduct1.setBrand(productRequest.getBrand());
+
+        productRepository.save(dbProduct1);
+
+        return true;
+
+
     }
 
     public boolean deleteProduct(ProductRequest productRequest) {
