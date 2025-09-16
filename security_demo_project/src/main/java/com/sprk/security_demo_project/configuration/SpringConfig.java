@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -18,7 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SpringConfig {
 
     // In Memory Users
-    @Bean
+    /*@Bean
     public UserDetailsService userDetailsService() {
         UserDetails normal = User.withUsername("abdul")
                 .password("{noop}1234")
@@ -34,13 +36,13 @@ public class SpringConfig {
                 .build();
 
         return new InMemoryUserDetailsManager(normal, admin, tester);
-    }
+    }*/
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf((csrf) -> csrf.disable());
         http.authorizeHttpRequests(req -> req
-                .requestMatchers("/home", "/test").permitAll()
+                .requestMatchers("/home", "/test","/signup").permitAll()
                 .anyRequest().authenticated()
         );
 
@@ -48,5 +50,11 @@ public class SpringConfig {
         http.formLogin(Customizer.withDefaults());
         http.logout(Customizer.withDefaults());
         return http.build();
+    }
+
+    // We nee password encoder object in IOC container
+    @Bean
+    public PasswordEncoder getPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
