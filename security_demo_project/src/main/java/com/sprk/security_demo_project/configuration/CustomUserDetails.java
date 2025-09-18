@@ -21,7 +21,7 @@ public class CustomUserDetails implements UserDetails {
         this.username = userInfo.getUsername();
         this.password = userInfo.getPassword();
 
-        System.out.println("Creating UserDetail Object");
+//        System.out.println("Creating UserDetail Object");
 
         if(userInfo.getRoles()!=null){
 
@@ -29,7 +29,7 @@ public class CustomUserDetails implements UserDetails {
                     .getRoles()
                     .stream()
                     .map(role -> {
-                        System.out.println("ROle = " + role.getRoleName());
+//                        System.out.println("ROle = " + role.getRoleName());
                         return new SimpleGrantedAuthority(role.getRoleName());
                     })
                     .collect(Collectors.toSet());

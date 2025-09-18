@@ -22,15 +22,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserInfoRepository userInfoRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("Searching User: " + username);
-        UserInfo userInfo = userInfoRepository.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException(""));
+    public UserDetails loadUserByUsername(String credential ) throws UsernameNotFoundException {
+//        System.out.println("Searching User: " + username);
+        UserInfo userInfo = userInfoRepository.findByUsername(credential)
+                        .or(() -> userInfoRepository.findByEmail(credential))
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found: " + credential));
 
-        if (userInfo == null) {
-            throw new UsernameNotFoundException("User Not Found = "+username);
-        }
-        System.out.println("Found User: " + userInfo.getUsername());
         Set<Role> roles = userInfo.getRoles();
+//        System.out.println("Roles = "+roles);
+//        System.out.println("Found User: " + userInfo.getUsername());
         userInfo.setRoles(roles);
         return new CustomUserDetails(userInfo);
     }
