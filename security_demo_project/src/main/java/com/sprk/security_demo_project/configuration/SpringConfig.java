@@ -1,7 +1,10 @@
 package com.sprk.security_demo_project.configuration;
 
+import com.sprk.security_demo_project.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -42,8 +45,10 @@ public class SpringConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf((csrf) -> csrf.disable());
         http.authorizeHttpRequests(req -> req
-                .requestMatchers("/home", "/test","/signup").permitAll()
-                .anyRequest().authenticated()
+                .requestMatchers("/home", "/test","/signup")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
         );
 
         http.httpBasic(Customizer.withDefaults());
@@ -56,5 +61,19 @@ public class SpringConfig {
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new CustomUserDetailsService();
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider(){
+        System.out.println("Auth Provider Called");
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setPasswordEncoder(getPasswordEncoder());
+        authProvider.setUserDetailsService(userDetailsService());
+        return authProvider;
     }
 }

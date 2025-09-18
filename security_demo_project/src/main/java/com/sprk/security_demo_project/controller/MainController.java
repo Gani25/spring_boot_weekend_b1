@@ -30,6 +30,12 @@ public class MainController {
         return "testing security I am having Tester Role";
     }
 
+    @GetMapping("/user")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    public String showUser() {
+        return "Testing security I am having User Role";
+    }
+
     @GetMapping("/admin/show-admin")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String showAdmin() {
