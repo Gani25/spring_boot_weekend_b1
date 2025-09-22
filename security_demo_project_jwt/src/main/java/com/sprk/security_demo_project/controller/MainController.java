@@ -1,19 +1,19 @@
 package com.sprk.security_demo_project.controller;
 
 import com.sprk.security_demo_project.entity.UserInfo;
+import com.sprk.security_demo_project.service.JwtService;
 import com.sprk.security_demo_project.service.UserInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 public class MainController {
 
     private final UserInfoService userInfoService;
+
+    private final JwtService jwtService;
 
     @GetMapping("/test")
     public String test() {
@@ -49,5 +49,14 @@ public class MainController {
         UserInfo signUpUserInfo = userInfoService.signUpUser(userInfo);
 
         return signUpUserInfo;
+    }
+
+    @PostMapping("/generate-token")
+    public String generateToke(@RequestParam String username, @RequestParam String password)
+    {
+        System.out.println("Generating token for: "+username);
+
+        return jwtService.getToken(username, password);
+
     }
 }
