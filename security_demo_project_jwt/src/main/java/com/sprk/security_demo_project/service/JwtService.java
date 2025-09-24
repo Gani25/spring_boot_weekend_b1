@@ -1,5 +1,6 @@
 package com.sprk.security_demo_project.service;
 
+import com.sprk.security_demo_project.dto.AuthRequest;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -19,13 +20,12 @@ public class JwtService {
     private String secretKey;
 
 
-    public String getToken(String username, String password) {
+    public String getToken(AuthRequest authRequest) {
 
-        System.out.println("Secret = "+secretKey);
-        System.out.println("Secret = "+secretKey.length());
+
         Map<String,Object> claims = new HashMap<>();
 
-        return createToken(claims, username);
+        return createToken(claims, authRequest.getUsername());
     }
 
     private String createToken(Map<String, Object> claims, String username) {

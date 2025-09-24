@@ -1,10 +1,15 @@
 package com.sprk.security_demo_project.controller;
 
+import com.sprk.security_demo_project.dto.AuthRequest;
 import com.sprk.security_demo_project.entity.UserInfo;
 import com.sprk.security_demo_project.service.JwtService;
 import com.sprk.security_demo_project.service.UserInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,10 +20,13 @@ public class MainController {
 
     private final JwtService jwtService;
 
+    private final AuthenticationManager authenticationManager;
+
     @GetMapping("/test")
     public String test() {
         return "testing security";
     }
+
     @GetMapping("/home")
     public String home() {
         return "Home Page after giving correct username and password security";
@@ -43,7 +51,6 @@ public class MainController {
     }
 
 
-
     @PostMapping("/signup")
     public UserInfo signup(@RequestBody UserInfo userInfo) {
         UserInfo signUpUserInfo = userInfoService.signUpUser(userInfo);
@@ -52,11 +59,19 @@ public class MainController {
     }
 
     @PostMapping("/generate-token")
-    public String generateToke(@RequestParam String username, @RequestParam String password)
-    {
-        System.out.println("Generating token for: "+username);
+    public String generateToke(@RequestBody AuthRequest authRequest){
 
-        return jwtService.getToken(username, password);
+        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
 
+        if(authenticate.isAuthenticated()){
+            return jwtService.getToken(authRequest);
+        }else{
+            throw new UsernameNotFoundException("Invalid credentials");
+        }
     }
+
+    // check username and password correct or not
+
+
+
 }
