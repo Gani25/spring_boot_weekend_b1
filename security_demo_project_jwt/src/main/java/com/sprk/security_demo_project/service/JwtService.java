@@ -6,6 +6,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ public class JwtService {
     public String getToken(String username, String password) {
 
         System.out.println("Secret = "+secretKey);
+        System.out.println("Secret = "+secretKey.length());
         Map<String,Object> claims = new HashMap<>();
 
         return createToken(claims, username);
