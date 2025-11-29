@@ -19,11 +19,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 				contact = @Contact(
 						name = "ABDUL GANI",
 						email = "memonabdulgani3d@gmail.com",
-						url = "https://www.sprktechnologies.in"
+						url = "https://www.linkedin.com/in/memon-abdul-gani/"
 				),
 				license = @License(
 						name = "Apache 2.0",
-						url = "https://www.sprktechnologies.in"
+						url = "https://www.linkedin.com/in/memon-abdul-gani/"
 				)
 		),
 		externalDocs = @ExternalDocumentation(

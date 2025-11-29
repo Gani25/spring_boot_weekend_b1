@@ -6,6 +6,7 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -14,13 +15,14 @@ import lombok.NoArgsConstructor;
         name = "Students",
         description = "Schema to hold information of Student"
 )
+@ToString
 public class StudentDto {
 
     @Schema(
             description = "Hold roll number of student",
             example = "10"
     )
-    private int rollNo;
+    private Integer rollNo;
 
     @NotBlank(message = "First Name Cannot Have Empty Space or Blank")
     @Schema(
@@ -50,7 +52,7 @@ public class StudentDto {
             description = "Hold age of student",
             example = "26"
     )
-    private int age;
+    private Integer age;
 
     @Schema(
             description = "Hold gender of student",
@@ -72,5 +74,5 @@ public class StudentDto {
             description = "Hold percentage of student",
             example = "85.55"
     )
-    private double percentage;
+    private Double percentage;
 }

@@ -28,6 +28,7 @@ import java.util.List;
         description = "REST apis of Student in SPRK Technologies like GET, POST, PUT, DELETE"
 )
 @RequestMapping("/sprk")
+
 public class StudentController {
 
     // Injecting Service
@@ -57,6 +58,7 @@ public class StudentController {
     @PostMapping("/student")
     public ResponseEntity<ResponseDto<StudentDto>> addStudent(@Valid @RequestBody StudentDto studentDto) {
         // Service Call
+        System.out.println(studentDto);
         StudentDto savedStudentDto = studentService.saveStudent(studentDto);
         ResponseDto<StudentDto> responseDto = new ResponseDto<>();
         responseDto.setStatusCode(StudentConstants.STUDENT_CREATED);
